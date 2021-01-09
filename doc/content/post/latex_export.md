@@ -92,3 +92,113 @@ When exporting you can call the following function to get the latex file.
 <object data="altacv.org.pdf" type="application/pdf" width="100%" height="500px">
 <p>Alternative text - include a link <a href="altacv.org.pdf">to the PDF!</a></p>
 </object>
+
+
+## Using AwesomeCV {#using-awesomecv}
+
+[AwesomeCV](https://github.com/posquit0/Awesome-CV) is another LaTeX template for producing nice-looking
+CVs. In addition to the regular document attributes, the following are supported:
+
+<div class="ox-hugo-table table table-striped">
+<div></div>
+
+| Field            | Description                                               |
+|------------------|-----------------------------------------------------------|
+| PHOTOSTYLE       | Style of photo to use. Comma-separated values can include |
+|                  | circle/rectangle,edge/noedge,left/right.                  |
+| CVCOLOR          | Color of highlights.                                      |
+| STACKOVERFLOW    | Stack overflow, must be specified as `ID username`        |
+| FONTDIR          | Directory where the fonts can be found, defaults          |
+|                  | to `fonts/` (as in the standard AwesomeCV)                |
+| CVHIGHLIGHTS     | Whether to colorize highlights. Defaults to true          |
+| QUOTE            | Optional quote to include at the top of the CV            |
+| FIRSTNAME        | First name to be shown in the CV. By default the first    |
+|                  | space-separated part of AUTHOR is used.                   |
+| LASTNAME         | Last name to be shown in the CV.  By default the second   |
+|                  | space-separated part of AUTHOR is used.                   |
+| CVFOOTER\_LEFT   | Text to include in the left footer. None by default       |
+| CVFOOTER\_MIDDLE | Text to include in the middle footer. None by default.    |
+| CVFOOTER\_RIGHT  | Text to include in the right footer. None by default.     |
+
+</div>
+
+AwesomeCV supports a few additional types of environment types in
+`CV_ENV`, including `cvemployer`, `cvskills`, `cvhonors` and `cvschool`. Some of
+these support additional property fields:
+
+<div class="ox-hugo-table table table-striped">
+<div></div>
+
+| Field      | Description                                                          |
+|------------|----------------------------------------------------------------------|
+| FROM       | Start date of the entry                                              |
+| TO         | End date of the entry                                                |
+| DATE       | Shortcut to specify both `FROM` and `TO` as the same date.           |
+|            | Both `FROM` and `TO` override `DATE`.                                |
+| EMPLOYER   | Employer or organization, can also be specified                      |
+|            | as `ORGANIZATION`, `SCHOOL`, `EVENT` or `POSITION` (different        |
+|            | names make more sense depending on the type of environment)          |
+| LABEL      | In `cvsubentry` environments, adds the given text to the left        |
+|            | of the date range, can be used to add additional information         |
+|            | to the entry.                                                        |
+| RIGHT\_IMG | path to an image to include floating to the right of a `cventry`,    |
+|            | a `cvsubentry` or `cvschool` entry. Meant to be used to show a logo. |
+| PAGEBREAK  | Causes a LaTeX `\clearpage` statement to be inserted in the          |
+|            | exported output before the heading.                                  |
+
+</div>
+
+All the supported values of `CV_ENV` are described below.
+
+
+### `cventries` {#cventries}
+
+Enclose all the subheaders in a `cventries` environment. Subheaders can
+be of type `cventry`, `cvschool`, or `cvemployer`.
+
+
+### `cvhonors` {#cvhonors}
+
+Enclose all the subheaders in a `cvhonors` environment. Subheaders must
+be of type `cvhonor`
+
+
+### `cventry` {#cventry}
+
+Converts to a `\cventry` command. Supports attributes `FROM`, `TO`, `DATE`,
+`EMPLOYER`, `LOCATION`, `RIGHT_IMG`.
+
+
+### `cvsubentry` {#cvsubentry}
+
+Converts to a `\cvsubentry` command. Supports attributes `FROM`, `TO`, `DATE`,
+`LABEL` `RIGHT_IMG`.
+
+
+### `cvemployer` {#cvemployer}
+
+Converts to a `\cventry` with only the title line. Supports attributes
+`FROM`, `TO`, `DATE` and `LOCATION`.
+
+
+### `cvschool` {#cvschool}
+
+Converts to a `\cventry`. The headline should contain the degree
+obtained, shown as the main title. Supports attributes `LOCATION`,
+`SCHOOL`, `FROM`, `TO`, `DATE` and `RIGHT_IMG`.
+
+
+### `cvhonor` {#cvhonor}
+
+Converts to a `\cvhonor` command (must be inside a `cvhonors`
+headline). Supports attributes `LOCATION`, `EMPLOYER` (in this case `EVENT`
+or `POSITION` might be more semantically accurate, and can also be
+used), `FROM`, `TO`, `DATE`.
+
+
+### `cvskills` {#cvskills}
+
+Converts to a `\cvskills` environment. The headline must contain a
+[description list](https://orgmode.org/manual/Plain-lists.html), which gets converted into a sequence of `\cvskill`
+commands, with the term as the skill title and the description as its
+contents.
